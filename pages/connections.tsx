@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
+import UserList from '@/components/UserList';
 
 const ConnectionRequests: React.FC = () => {
   const [connections, setConnections] = useState([]);
@@ -72,6 +73,7 @@ const ConnectionRequests: React.FC = () => {
         setReceivedRequests((prev) =>
           prev.filter((request) => request.id !== requestId)
         );
+        fetchConnections();
       }
     } catch (error) {
       console.error('Error accepting connection request:', error);
@@ -92,6 +94,7 @@ const ConnectionRequests: React.FC = () => {
         setReceivedRequests((prev) =>
           prev.filter((request) => request.id !== requestId)
         );
+        fetchConnections();
       }
     } catch (error) {
       console.error('Error rejecting connection request:', error);
@@ -112,6 +115,7 @@ const ConnectionRequests: React.FC = () => {
         setSentRequests((prev) =>
           prev.filter((request) => request.id !== requestId)
         );
+        fetchConnections();
       }
     } catch (error) {
       console.error('Error canceling sent connection request:', error);
@@ -122,33 +126,37 @@ const ConnectionRequests: React.FC = () => {
     <div className='bg-gray-100 min-h-screen p-6 w-1/2  mx-auto'>
       <h2 className='text-2xl text-cyan-900 mb-4'>My Connections</h2>
       <ul className='space-y-4'>
-        {connections.length ? connections.map((connection) => (
-          <li
-            key={connection.id}
-            className='bg-white p-4 rounded shadow mx-auto '
-          >
-            <div className='flex items-center'>
-              <img
-                src={
-                  connection.profile.profilePicUrl ||
-                  '/assets/userplaceholder.jpeg'
-                }
-                alt={connection.name}
-                className='w-12 h-12 rounded-full mr-4'
-              />
-              <a
-                href='#'
-                className='text-cyan-900 hover:underline'
-                onClick={(e) => {
-                  e.preventDefault();
-                  router.push(`/profile/${connection.id}`);
-                }}
-              >
-                {connection.name}
-              </a>
-            </div>
-          </li>
-        )): <span> You have no connections yet!</span>}
+        {connections.length ? (
+          connections.map((connection) => (
+            <li
+              key={connection.id}
+              className='bg-white p-4 rounded shadow mx-auto '
+            >
+              <div className='flex items-center'>
+                <img
+                  src={
+                    connection.profile.profilePicUrl ||
+                    '/assets/userplaceholder.jpeg'
+                  }
+                  alt={connection.name}
+                  className='w-12 h-12 rounded-full mr-4'
+                />
+                <a
+                  href='#'
+                  className='text-cyan-900 hover:underline'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(`/profile/${connection.id}`);
+                  }}
+                >
+                  {connection.name}
+                </a>
+              </div>
+            </li>
+          ))
+        ) : (
+          <span> You have no connections yet!</span>
+        )}
       </ul>
 
       <h2 className='text-2xl text-cyan-900 mt-6 mb-4'>
@@ -228,6 +236,10 @@ const ConnectionRequests: React.FC = () => {
           <span> You have no Sent requests!</span>
         )}
       </ul>
+      
+      <div className=' mt-4 bg-white p-4 rounded shadow mx-auto '>
+        <UserList />
+      </div>
     </div>
   );
 };
