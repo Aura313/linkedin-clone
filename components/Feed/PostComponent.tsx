@@ -131,8 +131,6 @@ export const PostComponent: React.FC<PostProps> = ({ post }) => {
   useEffect(() => {
     setCurrentPost(post);
   }, [post]);
-
-  console.log(comments, 'comments121221');
   return (
     <article className='rounded-lg border-gray-200 p-2'>
       <div key={currentPost.id} className='bg-white p-4'>
@@ -200,7 +198,7 @@ export const PostComponent: React.FC<PostProps> = ({ post }) => {
                 {/* You can replace these placeholders with actual icons or data */}
                 <button
                   onClick={() =>
-                    handleLike(currentPost.id, currentPost.user.id)
+                    handleLike(currentPost.id, userId)
                   }
                   className='text-blue-500'
                 >
