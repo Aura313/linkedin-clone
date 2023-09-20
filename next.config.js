@@ -1,4 +1,9 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+const dotenv = require('dotenv');
 
-module.exports = nextConfig
+dotenv.config();
+
+module.exports = {
+  env: {
+    JWT_SECRET: process.env.JWT_SECRET,
+  },
+};

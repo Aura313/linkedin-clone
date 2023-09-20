@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String              @id @default(auto()) @map("_id") @db.ObjectId
+  email            String              @unique
+  name             String
+  password         String
+  createdAt        DateTime            @default(now())
+  profile          Profile?
+  profileId        String?
+  sentRequests     ConnectionRequest[] @relation("ConnectionRequestSender")
+  receivedRequests ConnectionRequest[] @relation("ConnectionRequestReceiver")
+  posts            Post[]
+  reactions        Reaction[] //only for prisma
+  comments         Comment[] //only for prisma
+}
+
+model Profile {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  bio           String?
+  currentJob    String?
+  previousJobs  String[] @default([])
+  education     String[] @default([])
+  skills        String[] @default([])
+  profilePicUrl String?
+  userId        String   @unique @db.ObjectId
+  user          User     @relation(fields: [userId], references: [id])
+}
+
+model ConnectionRequest {
+  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  name       String?
+  senderId   String        @db.ObjectId
+  receiverId String        @db.ObjectId
+  status     RequestStatus
+  sentAt     DateTime      @default(now())
+  sender     User          @relation("ConnectionRequestSender", fields: [senderId], references: [id])
+  receiver   User          @relation("ConnectionRequestReceiver", fields: [receiverId], references: [id])
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Media {
+  id     String    @id @default(auto()) @map("_id") @db.ObjectId
+  type   MediaType
+  url    String
+  postId String?   @db.ObjectId
+  post   Post?     @relation(fields: [postId], references: [id])
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  // Add other types as needed
+}
+
+model Post {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?  @updatedAt
+  userId    String     @db.ObjectId
+  user      User       @relation(fields: [userId], references: [id])
+  reactions Reaction[]
+  shares    Int        @default(0)
+  comments  Comment[]
+  media     Media[]
+}
+
+model Reaction {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  type      ReactionType
+  createdAt DateTime     @default(now())
+  userId    String       @db.ObjectId
+  user      User         @relation(fields: [userId], references: [id])
+  postId    String       @db.ObjectId
+  post      Post         @relation(fields: [postId], references: [id])
+  @@unique([userId, postId])
+}
+
+enum ReactionType {
+  LIKE
+  // Add other reaction types as needed
+}
+
+model Comment {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  userId    String    @db.ObjectId
+  user      User      @relation(fields: [userId], references: [id])
+  postId    String    @db.ObjectId
+  post      Post      @relation(fields: [postId], references: [id])
+}
