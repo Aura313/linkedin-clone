@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         try {
             await prisma.connectionRequest.update({
                 where: { id: requestId },
-                data: { status: 'rejected' }
+                data: { status: 'REJECTED' }
             });
 
             res.status(200).json({ message: 'Connection request rejected' });
