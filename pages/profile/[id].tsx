@@ -23,28 +23,11 @@ const UserProfile = () => {
   const [connectionStatus, setConnectionStatus] = useState('Own');
 
   session.then((data) => {
-    console.log(data, 'wlsdkwdk');
     let userIdEx = (data && data.user.id) || '';
     setloggedInUserId(userIdEx);
   });
 
-  // let loggedInUserId = '';
-
-  // if (typeof window !== 'undefined') {
-  //   loggedInUserId = localStorage.getItem('userId') || ''; // Get this from your session or context
-  // }
-
-  // const handleSave = (updatedData: UserProfileData) => {
-  //   // Make an API call to update the user data
-  //   // After successful update, close the modal and refresh user data
-
-  //   console.log( "haha")
-  //   setIsEditing(false);
-  //   setUserData(updatedData);
-  // };
-
   const handleSave = async (updatedData: User) => {
-    console.log(updatedData, 'updatedDataupdatedData');
     await fetch(`/api/profile?userId=${id}`, {
       method: 'PUT',
       headers: {
@@ -92,8 +75,6 @@ const UserProfile = () => {
           setLoading(false);
         });
     }
-
-    console.log(loggedInUserId, id, '902i3e');
     if (
       loggedInUserId !== undefined &&
       loggedInUserId &&
