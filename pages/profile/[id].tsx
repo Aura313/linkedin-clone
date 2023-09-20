@@ -92,7 +92,9 @@ const UserProfile = () => {
           setLoading(false);
         });
     }
+  }, [id]);
 
+  useEffect(() => {
     console.log(loggedInUserId, id, '902i3e');
     if (
       loggedInUserId !== undefined &&
@@ -108,7 +110,7 @@ const UserProfile = () => {
           console.error('Failed to fetch connection status:', error)
         );
     }
-  }, [loggedInUserId]);
+  }, [id]);
 
   const sendConnectionRequest = async () => {
     try {
@@ -142,7 +144,7 @@ const UserProfile = () => {
       case 'NOT_CONNECTED':
         return (
           <button
-            className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition duration-150 ease-in-out'
+            className='bg-cyan-900 hover:bg-cyan-800 text-white px-4 py-2 rounded transition duration-150 ease-in-out'
             onClick={sendConnectionRequest}
           >
             Connect
@@ -173,7 +175,6 @@ const UserProfile = () => {
         return null;
     }
   };
-  
 
   if (loading) return <p className='text-center text-lg mt-6'>Loading...</p>;
 
@@ -192,14 +193,16 @@ const UserProfile = () => {
         currentJob={userData.profile?.currentJob || 'No job title'}
         renderConnectionButton={renderConnectionButton}
       />
-      <div className='mt-4 border-t border-gray-200 pt-4 flex justify-end'>
-        <button
-          onClick={() => setIsEditing(true)}
-          className='text-cyan-900 px-4 py-2 rounded-full border border-cyan-900 hover:bg-cyan-800 hover:text-white'
-        >
-          Edit Profile
-        </button>
-      </div>
+      {id === loggedInUserId && (
+        <div className='mt-4 border-t border-gray-200 pt-4 flex justify-end'>
+          <button
+            onClick={() => setIsEditing(true)}
+            className='text-cyan-900 px-4 py-2 rounded-full border border-cyan-900 hover:bg-cyan-800 hover:text-white'
+          >
+            Edit Profile
+          </button>
+        </div>
+      )}
       <Modal
         isOpen={isEditing}
         onClose={() => setIsEditing(false)}
