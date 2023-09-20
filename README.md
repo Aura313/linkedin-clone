@@ -83,6 +83,12 @@ Certainly, let's update the "Features" section to reflect the mini LinkedIn feat
   - **View Connections:** A list of all connections a user has made is readily available.
   - **Manage Connection Requests:** Users can see incoming connection requests and choose to accept or reject them. They can also view and cancel sent requests.
 
+## Future Scope
+- Pagination
+- Search
+- Employer Registration
+- Jobs
+
 ## Contribution
 
 If you wish to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
