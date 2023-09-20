@@ -23,7 +23,6 @@ export const CommentsComponent: React.FC<CommentsProps> = ({
   const [commentContent, setCommentContent] = useState('');
   const [userData, setUserData] = useState<User | null>(null);
 
-
   const session = getSession();
   const [userId, setUserId] = useState('');
   // const { data: session } = useSession();
@@ -33,7 +32,6 @@ export const CommentsComponent: React.FC<CommentsProps> = ({
     let userIdEx = (data && data.user.id) || '';
     setUserId(userIdEx);
   });
-
 
   useEffect(() => {
     if (userId) {
@@ -79,8 +77,8 @@ export const CommentsComponent: React.FC<CommentsProps> = ({
   //   }
   // };
   if (!userData)
-  return <p className='text-center text-lg mt-6'>User not found.</p>;
-console.log(userData, "useruseruseruser");
+    return <p className='text-center text-lg mt-6'>User not found.</p>;
+  console.log(userData, 'useruseruseruser');
   return (
     <section className='p-6 border-t border-gray-200 text-sm text-gray-500 bg-white'>
       {/* <h2 className='text-xl font-medium mb-2'>Comments</h2> */}
@@ -91,7 +89,7 @@ console.log(userData, "useruseruseruser");
         user={userData}
       />
 
-      <ViewComments comments={comments} user={user} />
+      <ViewComments comments={comments} />
     </section>
   );
 };

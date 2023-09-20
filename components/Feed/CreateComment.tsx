@@ -14,7 +14,7 @@ export const CreateComment: React.FC<CreateCommentProps> = ({
   user,
 }) => {
   const [commentContent, setCommentContent] = useState('');
-
+console.log(user.id , "cmkjkckck")
   const handleCommentSubmit = async () => {
     if (!commentContent.trim()) return; // prevent empty comments
 
