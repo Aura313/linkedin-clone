@@ -6,6 +6,7 @@ import { getSession } from 'next-auth/react';
 const FeedPage: React.FC = () => {
   const session = getSession();
   const [userId, setUserId] = useState('');
+  const [userName, setUserName] = useState('');
   const [postContent, setPostContent] = useState<string>('');
   const [posts, setPosts] = useState<FeedPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -14,13 +15,12 @@ const FeedPage: React.FC = () => {
     setPostContent(event.target.value);
   };
 
-
   session.then((data) => {
     // console.log(, 'wlsdkwdk');
     let userIdEx = (data && data.user.id) || '';
     setUserId(userIdEx);
+    setUserName((data && data.user.name) || '');
   });
-
 
   const handlePostSubmit = async () => {
     if (postContent.trim()) {
@@ -76,8 +76,9 @@ const FeedPage: React.FC = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <main className='container mx-auto py-6 px-4'>      
+    <main className='container mx-auto py-6 px-4'>
       {/* Post Creation Section */}
+      <h1 className='text-2xl font-mono text-cyan-900'> Hi, {userName}!</h1>
       <section className='mb-6 bg-white p-4 rounded shadow'>
         <textarea
           className='w-full p-2 border rounded resize-none'
@@ -86,6 +87,7 @@ const FeedPage: React.FC = () => {
           value={postContent}
           onChange={handlePostChange}
         />
+
         <button
           onClick={handlePostSubmit}
           className='mt-2 bg-cyan-900 hover:bg-cyan-800 text-white px-4 py-2 rounded-full'

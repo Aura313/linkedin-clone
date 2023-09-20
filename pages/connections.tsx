@@ -122,7 +122,7 @@ const ConnectionRequests: React.FC = () => {
     <div className='bg-gray-100 min-h-screen p-6 w-1/2  mx-auto'>
       <h2 className='text-2xl text-cyan-900 mb-4'>My Connections</h2>
       <ul className='space-y-4'>
-        {connections.map((connection) => (
+        {connections.length ? connections.map((connection) => (
           <li
             key={connection.id}
             className='bg-white p-4 rounded shadow mx-auto '
@@ -148,7 +148,7 @@ const ConnectionRequests: React.FC = () => {
               </a>
             </div>
           </li>
-        ))}
+        )): <span> You have no connections yet!</span>}
       </ul>
 
       <h2 className='text-2xl text-cyan-900 mt-6 mb-4'>
