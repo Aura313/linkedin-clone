@@ -92,9 +92,7 @@ const UserProfile = () => {
           setLoading(false);
         });
     }
-  }, [id]);
 
-  useEffect(() => {
     console.log(loggedInUserId, id, '902i3e');
     if (
       loggedInUserId !== undefined &&
@@ -110,7 +108,7 @@ const UserProfile = () => {
           console.error('Failed to fetch connection status:', error)
         );
     }
-  }, [id]);
+  }, [id, loggedInUserId]);
 
   const sendConnectionRequest = async () => {
     try {
