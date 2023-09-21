@@ -32,6 +32,10 @@ Authentication in this application is handled by [NextAuth](https://next-auth.js
 
 File storage is managed using [AWS S3](https://aws.amazon.com/s3/). It offers a scalable and high-speed object storage service.
 
+### Tailwind CSS
+
+Tailwind CSS framework for styling the platform [https://tailwindcss.com/]. 
+
 ## Getting Started
 
 1. **Clone the repository**
