@@ -5,9 +5,10 @@ interface Props {
   name: string;
   currentJob?: string;
   renderConnectionButton: () => any;
+  isCurrentUser: boolean
 }
 
-const ProfileHeader: React.FC<Props> = ({ profilePic, name, currentJob, renderConnectionButton }) => {
+const ProfileHeader: React.FC<Props> = ({ profilePic, name, currentJob, renderConnectionButton, isCurrentUser }) => {
   return (
     <div className="flex items-center space-x-4 p-6 bg-white shadow-sm border border-gray-200 rounded-lg">
       <img src={profilePic || '/default-profile-pic.jpg'} alt="Profile" className="w-24 h-24 rounded-full object-cover" />
@@ -15,7 +16,7 @@ const ProfileHeader: React.FC<Props> = ({ profilePic, name, currentJob, renderCo
         <h1 className="text-2xl font-semibold text-gray-800">{name}</h1>
         <p className="text-gray-600 text-sm mt-1">{currentJob}</p>
       </div>
-      {renderConnectionButton()}
+      {!isCurrentUser && renderConnectionButton()}
     </div>
   );
 }

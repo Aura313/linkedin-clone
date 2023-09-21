@@ -171,6 +171,7 @@ const UserProfile = () => {
         name={userData.name}
         currentJob={userData.profile?.currentJob || 'No job title'}
         renderConnectionButton={renderConnectionButton}
+        isCurrentUser={loggedInUserId === id}
       />
       {id === loggedInUserId && (
         <div className='mt-4 border-t border-gray-200 pt-4 flex justify-end'>
